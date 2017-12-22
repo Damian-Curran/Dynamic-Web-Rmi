@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+  <display-name>WebWithRmi</display-name>
+  
+  <servlet>
+	  <servlet-name>dict</servlet-name>
+	  <servlet-class>client/ClientServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>dict</servlet-name>
+  <url-pattern>/Dictionary</url-pattern>
+  </servlet-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>Menu.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
