@@ -20,3 +20,7 @@ Hopefully you will have a better understanding of RabbitMQ with the use of the i
 ## Dictionary
 The dictionary we use is the Webster's Unabridged Dictionary by Various and can be found at http://www.gutenberg.org/ebooks/29765.
 
+## Installing needed technologies
+Firstly we will need Eclipse: https://www.ntu.edu.sg/home/ehchua/programming/howto/EclipseJava_HowTo.html
+Apache Tomcat: http://crunchify.com/step-by-step-guide-to-setup-and-install-apache-tomcat-server-in-eclipse-development-environment-ide/
+Then you will need to install Erlang and RabbitMQ: https://www.rabbitmq.com/install-windows.html
