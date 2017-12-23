@@ -5,7 +5,6 @@ import java.util.UUID;
 import java.util.concurrent.TimeoutException;
 
 import javax.servlet.Servlet;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,9 +22,8 @@ import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
 
 import server.Word;
-/**
- * Servlet implementation class ClientServlet
- */
+
+//web servlet
 @WebServlet("/ClientServlet")
 public class ClientServlet extends HttpServlet implements Servlet{
 	private static final long serialVersionUID = 1L;
@@ -35,33 +33,18 @@ public class ClientServlet extends HttpServlet implements Servlet{
 	private static String UUI = "";
 	private static String job = "";
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public ClientServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
-    
-    @Override
-	public void init(ServletConfig arg0) throws ServletException {
-		// TODO Auto-generated method stub
-	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			//response.sendRedirect("member.jsp");
 		
+		//gets result of which button pressed, if pressed it wont equal null
+		//page is routed to a new jsp page depending on button clicked
 		if(request.getParameter("btn1") != null)
 		{
 			request.getRequestDispatcher("/enterWord.jsp").forward(request,response);
@@ -89,13 +72,19 @@ public class ClientServlet extends HttpServlet implements Servlet{
 			return;
 		}
 		
+		//checks buttons to see which was pressed
 		if(request.getParameter("wordDefinition") != null)
 		{
+			//gets word entered into input field 
 			String wordName = request.getParameter("word");
+			//creates word object with name of word entered
 			Word wordDef = new Word(wordName);
+			//sets job variable for later use
 			job = "getDef";
+			//calls words method 
 			words(job, wordDef);
 			
+			//sets page attributes to show result, shows definition of word entered
 			request.setAttribute("wordDef", definition);
 			definition = "";
 			request.getRequestDispatcher("/result.jsp").forward(request,response);
@@ -104,13 +93,17 @@ public class ClientServlet extends HttpServlet implements Servlet{
 		}
 		else if(request.getParameter("addWord") != null)
 		{
+			//method for taking word details from add.jsp
 			String wordName = request.getParameter("word");
 			String wordDef = request.getParameter("def");
 			
+			//creates word object with word name and word definition
 			Word wordAdd = new Word(wordName, wordDef);
+			//adds job associated with form submitted
 			job = "addWord";
 			words(job, wordAdd);
 			
+			//returns word added to let user know word has been added
 			request.setAttribute("wordDef", "Word Added");
 			definition = "";
 			request.getRequestDispatcher("/result.jsp").forward(request,response);
@@ -133,22 +126,28 @@ public class ClientServlet extends HttpServlet implements Servlet{
 		}
 		else if(request.getParameter("modifyWord") != null)
 		{
+			//takes value from input field of "word"
 			String wordName = request.getParameter("word");
 			
+			//creates object with word input field value
 			Word wordModify = new Word(wordName);
+			//assigns job
 			job = "modifyWord";
+			//calls method 
 			words(job, wordModify);
 			
+			//sets attributes to show word searched for and word definition associated with
 			request.setAttribute("word", wordName);
 			request.setAttribute("def", definition);
-			request.setAttribute("modify", "Modify");
 			definition = "";
+			//loads jsp page 
 			request.getRequestDispatcher("/modifyWord.jsp").forward(request,response);
 			
 			return;
 		}
 		else if(request.getParameter("addModifiedWord") != null)
 		{
+			//takes values from input fields
 			String wordName = request.getParameter("word");
 			String wordDef = request.getParameter("def");
 			
@@ -156,8 +155,10 @@ public class ClientServlet extends HttpServlet implements Servlet{
 			job = "addModifiedWord";
 			words(job, wordAdd);
 			
+			//lets user know word has been modified successfully 
 			request.setAttribute("wordDef", "Word Modified");
 			definition = "";
+			//returns result page with Word modified displayed
 			request.getRequestDispatcher("/result.jsp").forward(request,response);
 			
 			return;
@@ -190,12 +191,14 @@ public class ClientServlet extends HttpServlet implements Servlet{
 	
 	public void words(String jobs, Word word) throws IOException
 	{
+		//try and catch for calling method to add task to queue
 		try {
 			stuff(jobs, word);
 		} catch (TimeoutException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		//creates connection to output queue
 		
 		ConnectionFactory factory = new ConnectionFactory();
 	    factory.setHost("localhost");
@@ -203,7 +206,6 @@ public class ClientServlet extends HttpServlet implements Servlet{
 		try {
 			connection = factory.newConnection();
 		} catch (TimeoutException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    Channel channel = connection.createChannel();
@@ -222,7 +224,7 @@ public class ClientServlet extends HttpServlet implements Servlet{
 	    	  
 	    	  
 	    	  	String rawr = replyProps.getCorrelationId().toString();
-				
+				//checks if queue correlationID string returned is showing same UUID as the one sent to input queue
 				if(!UUI.equals(rawr))
 				{
 					System.out.println("should not be here :(");
@@ -239,15 +241,12 @@ public class ClientServlet extends HttpServlet implements Servlet{
 	      }
 	    };
 	    channel.basicConsume(OUTPUT_NAME, true, consumer);
-		
-		//name = wordName;
 	    
 	    while(definition == "")
 	    {
 		    try {
 				Thread.sleep(10000);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	    }
