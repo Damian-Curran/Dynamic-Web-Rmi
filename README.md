@@ -24,3 +24,11 @@ The dictionary we use is the Webster's Unabridged Dictionary by Various and can 
 Firstly we will need Eclipse: https://www.ntu.edu.sg/home/ehchua/programming/howto/EclipseJava_HowTo.html
 Apache Tomcat: http://crunchify.com/step-by-step-guide-to-setup-and-install-apache-tomcat-server-in-eclipse-development-environment-ide/
 Then you will need to install Erlang and RabbitMQ: https://www.rabbitmq.com/install-windows.html
+
+## Using this repository
+git clone https://github.com/Damian404/Dynamic-Web-Rmi.git
+
+Import clone into eclipse
+Run rabbitmq service
+Run client, serverSetup as java applications
+Run clientServlet on Apache Tomcat server 
