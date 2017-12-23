@@ -31,6 +31,9 @@ Then you will need to install Erlang and RabbitMQ: https://www.rabbitmq.com/inst
 git clone https://github.com/Damian404/Dynamic-Web-Rmi.git
 
 Import clone into eclipse
+
 Run rabbitmq service
+
 Run client, serverSetup as java applications
+
 Run clientServlet on Apache Tomcat server 
