@@ -13,11 +13,5 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="C:/Users/Damian Curran/Desktop/amqp-client-5.1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Damian Curran/Desktop/commons-cli-1.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Damian Curran/Desktop/commons-io-1.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Damian Curran/Desktop/slf4j-api-1.7.25.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Damian Curran/Desktop/slf4j-simple-1.7.2.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Damian Curran/Desktop/commons-lang-2.6.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

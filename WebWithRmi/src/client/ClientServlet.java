@@ -85,10 +85,17 @@ public class ClientServlet extends HttpServlet implements Servlet{
 			words(job, wordDef);
 			
 			//sets page attributes to show result, shows definition of word entered
-			request.setAttribute("wordDef", definition);
-			definition = "";
-			request.getRequestDispatcher("/result.jsp").forward(request,response);
+			if(definition.equals(""))
+			{
+				request.setAttribute("wordDef", "Word not found, please try again");
+			}
+			else
+			{
+				request.setAttribute("wordDef", definition);
+				definition = "";
+			}
 			
+			request.getRequestDispatcher("/result.jsp").forward(request,response);
 			return;
 		}
 		else if(request.getParameter("addWord") != null)
