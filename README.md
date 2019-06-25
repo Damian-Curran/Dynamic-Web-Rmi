@@ -37,3 +37,5 @@ Run rabbitmq service
 Run client, serverSetup as java applications
 
 Run clientServlet on Apache Tomcat server 
+
+Access through: http://localhost:8080/WebWithRmi/
